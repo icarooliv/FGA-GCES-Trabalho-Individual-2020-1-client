@@ -15,7 +15,7 @@ Matrícula: 15/0129807
 
 **Client**: https://codeclimate.com/github/icarooliv/FGA-GCES-Trabalho-Individual-2020-1-client
 
-## Como executar a API e Client.
+## Como executar a API e Client
 
 Na raiz do respectivo projeto
 
@@ -25,15 +25,29 @@ Depois disso, basta executar o seguinte comando (para ambiente de dev, por exemp
 
 ``docker-compose --env-file=".env.development" up --build``
 
+
+* A API estará rodando em: `http://localhost:3091`
+
+* O Client estará rodando em: `http://localhost:3091`
+
 Depois, para executar comandos dentro do container:
 
 Na API:
 
 ``docker-compose run api <comando>``
 
+Para rodar os testes, por exemplo:
+
+``docker-compose run api rails test``
+
 No Client:
 
 ``docker-compose run client <comando>``
+
+Para rodar os testes, por exemplo:
+
+``docker-compose run client yarn:unit``
+
 
 ## Tecnologias
 
