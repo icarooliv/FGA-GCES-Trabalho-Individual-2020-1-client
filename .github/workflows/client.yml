@@ -49,5 +49,5 @@ jobs:
           RANCHER_CLUSTER_ID: '${{ secrets.RANCHER_CLUSTER_ID }}'
           RANCHER_NAMESPACE: '${{ secrets.RANCHER_NAMESPACE }}'
           RANCHER_PROJECT_ID: '${{ secrets.RANCHER_PROJECT_ID }}'
-          RANCHER_URL: '${{ secrets.RANCHER_URL }}'
+          RANCHER_URL: https://rancher.167.172.138.213.xip.io/v3
           RANCHER_WORKLOADS: '${{ secrets.RANCHER_WORKLOADS }}'
