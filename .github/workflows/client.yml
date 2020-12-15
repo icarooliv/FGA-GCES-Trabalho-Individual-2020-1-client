@@ -16,12 +16,22 @@ jobs:
         uses: actions/cache@v2
         with:
           path: node_modules
-          key: node-modules-${{ hashFiles('yarn.lock') }}
+          key: 'node-modules-${{ hashFiles(''yarn.lock'') }}'
       - name: Install
         run: yarn install
         if: steps.cache.outputs.cache-hit != 'true'
       - name: Test
         run: 'yarn test:unit'
+      - name: Upload coverage results
+        uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: '${{ secrets.CC_TEST_REPORTER_ID }}'
   build:
     name: Build
     needs:
@@ -44,17 +54,3 @@ jobs:
           tags: 'icarooliv/trab-individual-client:latest'
           cache-from: 'type=registry,ref=icarooliv/trab-individual-client:latest'
           cache-to: type=inline
-#   deploy:
-#     needs: [tests, build]
-#     if: github.ref == 'refs/heads/main'
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Update rancher deployment
-#         uses: th0th/rancher-redeploy-workload@v0.82
-#         env:
-#           RANCHER_BEARER_TOKEN: '${{ secrets.RANCHER_BEARER_TOKEN }}'
-#           RANCHER_CLUSTER_ID: '${{ secrets.RANCHER_CLUSTER_ID }}'
-#           RANCHER_NAMESPACE: '${{ secrets.RANCHER_NAMESPACE }}'
-#           RANCHER_PROJECT_ID: '${{ secrets.RANCHER_PROJECT_ID }}'
-#           RANCHER_URL: '${{ secrets.RANCHER_URL }}'
-#           RANCHER_WORKLOADS: '${{ secrets.RANCHER_WORKLOADS }}'
