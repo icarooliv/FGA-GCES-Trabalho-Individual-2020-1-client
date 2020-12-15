@@ -1,0 +1,23 @@
+version: "3.7"
+services:  
+  
+  client:
+    container_name: client
+    build: .
+    volumes:
+      - .:/client
+      - node_modules:/client/node_modules
+    ports:
+      - "8091:8080"    
+    environment:
+      API_URL: ${API_URL}
+      VUE_APP_API_URL: ${VUE_APP_API_URL}      
+    networks:
+      - api_default
+
+networks:
+  api_default:
+    external: true
+
+volumes:
+  node_modules:

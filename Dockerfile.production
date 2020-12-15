@@ -1,0 +1,18 @@
+# estágio de compilação
+FROM node:lts-alpine as build-stage
+WORKDIR /client
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn install
+COPY . .
+RUN yarn run build
+
+# estágio de produção
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /client/dist /usr/share/nginx/html
+EXPOSE 80
+
+# Using `sed` to replace {{ API_URL }} with the actual API URL,
+# which is given to the container at RUN TIME !
+CMD sed -i -e "s#{{ API_URL }}#$API_URL#g" /usr/share/nginx/html/js/app.*.js && \
+    nginx -g "daemon off;"
