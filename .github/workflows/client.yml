@@ -6,9 +6,6 @@ on:
 jobs:
   tests:
     name: Test
-    defaults:
-      run:
-        working-directory: client
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +14,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-          working-directory: client/
       - name: Install
         run: yarn install
       - name: Test
@@ -26,10 +22,7 @@ jobs:
   build:
     name: Build
     needs: [tests]
-    runs-on: ubuntu-latest 
-    defaults:
-      run:
-        working-directory: api
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -50,7 +43,4 @@ jobs:
           push: true
           tags: icarooliv/trab-individual-client:latest
           cache-from: type=registry,ref=icarooliv/trab-individual-client:latest
-          cache-to: type=inline
-          context: ./client
-          file: ./client/Dockerfile.production
-    
+          cache-to: type=inline    
