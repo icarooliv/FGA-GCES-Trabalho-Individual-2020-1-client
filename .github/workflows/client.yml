@@ -1,45 +1,52 @@
 name: Client CI
-
-on: 
-  push:
-
+'on':
+  push: null
 jobs:
   tests:
     name: Test
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: 'Use Node.js ${{ matrix.node-version }}'
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '${{ matrix.node-version }}'
       - name: Install
         run: yarn install
       - name: Test
-        run: yarn test:unit  
-
+        run: 'yarn test:unit'
   build:
     name: Build
-    needs: [tests]
+    needs:
+      - tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1 
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+          username: '${{ secrets.DOCKERHUB_USERNAME }}'
+          password: '${{ secrets.DOCKERHUB_TOKEN }}'
+      - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          push: ${{ github.head_ref == 'main' }}
-          tags: icarooliv/trab-individual-client:latest
-          cache-from: type=registry,ref=icarooliv/trab-individual-client:latest
-          cache-to: type=inline    
+          push: '${{ github.head_ref == ''main'' }}'
+          tags: 'icarooliv/trab-individual-client:latest'
+          cache-from: 'type=registry,ref=icarooliv/trab-individual-client:latest'
+          cache-to: type=inline
+  deploy:
+    if: '${{ github.head_ref == ''main'' }}'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update rancher deployment
+        uses: th0th/rancher-redeploy-workload@v0.82
+        env:
+          RANCHER_BEARER_TOKEN: '${{ secrets.RANCHER_BEARER_TOKEN }}'
+          RANCHER_CLUSTER_ID: '${{ secrets.RANCHER_CLUSTER_ID }}'
+          RANCHER_NAMESPACE: '${{ secrets.RANCHER_NAMESPACE }}'
+          RANCHER_PROJECT_ID: '${{ secrets.RANCHER_PROJECT_ID }}'
+          RANCHER_URL: '${{ secrets.RANCHER_URL }}'
+          RANCHER_WORKLOADS: '${{ secrets.RANCHER_WORKLOADS }}'
