@@ -87,11 +87,15 @@ Para coleta de métricas de cobertura de testes.
 
 Esse trabalho realizou os seguintes objetivos:
 
-[x] Test a cada push em qualquer branch
-[x] Coleta de cobertura de testes a cada push em qualquer branch
-[x] Build a cada push em qualquer branch
-[x] Push da imagem para o DockerHub a cada push na branch `main`
-[x] Deploy da nova imagem no Rancher a cada push na branch `main` (parcial, explicação na sessão de Pipeline CI/CD)
+- [x] Test a cada push em qualquer branch
+
+- [x] Coleta de cobertura de testes a cada push em qualquer branch
+
+- [x] Build a cada push em qualquer branch
+
+- [x] Push da imagem para o DockerHub a cada push na branch `main`
+
+- [x] Deploy da nova imagem no Rancher a cada push na branch `main` (parcial, explicação na sessão de Pipeline CI/CD)
 
 ## Contêinerização
 ### Contextualização
