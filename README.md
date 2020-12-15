@@ -12,6 +12,7 @@ Matrícula: 15/0129807
 ## Métricas CodeClimate:
 
 **API**: https://codeclimate.com/github/icarooliv/FGA-GCES-Trabalho-Individual-2020-1-api
+
 **Client**: https://codeclimate.com/github/icarooliv/FGA-GCES-Trabalho-Individual-2020-1-client
 
 ## Como executar a API e Client.
