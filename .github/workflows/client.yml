@@ -38,6 +38,7 @@ jobs:
           cache-from: 'type=registry,ref=icarooliv/trab-individual-client:latest'
           cache-to: type=inline
   deploy:
+    needs: [tests, build]
     if: '${{ github.head_ref == ''main'' }}'
     runs-on: ubuntu-latest
     steps:
