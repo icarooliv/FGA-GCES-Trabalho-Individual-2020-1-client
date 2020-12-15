@@ -39,8 +39,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-#         push: ${{ github.head_ref == 'master' }}
-          push: true
+          push: ${{ github.head_ref == 'main' }}
           tags: icarooliv/trab-individual-client:latest
           cache-from: type=registry,ref=icarooliv/trab-individual-client:latest
           cache-to: type=inline    
